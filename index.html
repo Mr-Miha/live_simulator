@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Симулятор жизни</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ================= СОЗДАНИЕ ПЕРСОНАЖА ================= -->
+  <section id="screen-creation" class="screen active">
+    <div class="creation-wrap">
+      <h1>🧬 Симулятор жизни</h1>
+      <p class="lead">
+        Жанр, где нет единственной цели — важна сама жизнь. Ведите персонажа
+        от детства до старости: следите за <b>биологией</b> (гены, здоровье)
+        и <b>социумом</b> (учёба, работа, семья, питомцы).
+      </p>
+
+      <div class="card">
+        <label class="field">
+          <span>Имя персонажа</span>
+          <input id="inp-name" type="text" maxlength="18" placeholder="Например, Алекс">
+        </label>
+
+        <div class="field">
+          <span>Пол</span>
+          <div class="seg" id="seg-gender">
+            <button type="button" class="seg-btn active" data-gender="М">Мужской</button>
+            <button type="button" class="seg-btn" data-gender="Ж">Женский</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="genome-head">
+            <span>Геном (наследственность)</span>
+            <button type="button" id="btn-reroll" class="btn ghost small">🎲 Пересобрать (<span id="rerolls">3</span>)</button>
+          </div>
+          <div id="genome" class="genome"></div>
+          <p class="hint">Гены влияют на здоровье, характер, доход и продолжительность жизни.</p>
+        </div>
+
+        <button type="button" id="btn-start" class="btn primary big">Начать жизнь</button>
+        <p class="hint center">Жизнь начинается в 6 лет. Один ход = один год жизни.</p>
+      </div>
+
+      <p class="source">
+        Жанр «симулятор жизни»: поджанр стратегий и симуляторов бога; примеры —
+        <i>The Sims</i> (социум) и <i>Spore</i> (биология); хиты делала студия Maxis.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= ИГРА ================= -->
+  <section id="screen-game" class="screen">
+    <header class="hud">
+      <div class="hud-left">
+        <div class="avatar" id="hud-avatar">🙂</div>
+        <div>
+          <div class="hud-name" id="hud-name">Имя</div>
+          <div class="hud-sub" id="hud-sub">Ребёнок · 6 лет</div>
+        </div>
+      </div>
+      <div class="hud-stats">
+        <div class="hud-chip"><span class="k">Возраст</span><b id="hud-age">6</b></div>
+        <div class="hud-chip"><span class="k">Деньги</span><b id="hud-money">0 ₽</b></div>
+        <div class="hud-chip"><span class="k">Работа</span><b id="hud-job">—</b></div>
+        <div class="hud-chip"><span class="k">Образование</span><b id="hud-edu">—</b></div>
+      </div>
+      <div class="hud-right">
+        <button type="button" id="btn-menu" class="btn ghost small">Меню</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- Панель персонажа -->
+      <aside class="panel">
+        <h2 class="panel-title">Состояние</h2>
+        <div id="needs" class="needs"></div>
+
+        <h2 class="panel-title">Характеристики</h2>
+        <div id="attrs" class="attrs"></div>
+
+        <h2 class="panel-title">Близкие</h2>
+        <div id="family" class="family"></div>
+
+        <h2 class="panel-title">Черты генома</h2>
+        <div id="trait-list" class="traits"></div>
+      </aside>
+
+      <!-- Действия -->
+      <main class="panel center-panel">
+        <div class="time-bar">
+          <div class="time-bar-top">
+            <span>Свободное время в этом году</span>
+            <b><span id="months-left">12</span> / 12 мес.</b>
+          </div>
+          <div class="bar big"><i id="time-fill"></i></div>
+        </div>
+
+        <h2 class="panel-title">Чем заняться?</h2>
+        <div id="actions" class="actions"></div>
+
+        <button type="button" id="btn-endyear" class="btn primary big endyear">
+          ⏭ Завершить год
+        </button>
+      </main>
+
+      <!-- Хроника -->
+      <aside class="panel">
+        <h2 class="panel-title">Хроника жизни</h2>
+        <div id="log" class="log"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= ИТОГИ ================= -->
+  <section id="screen-over" class="screen">
+    <div class="over-wrap">
+      <h1 id="over-title">Конец</h1>
+      <p id="over-summary" class="lead"></p>
+
+      <div class="card">
+        <div class="score-line">
+          <span>Счёт жизни</span>
+          <b id="over-score">0</b>
+        </div>
+        <div class="rank" id="over-rank">—</div>
+        <div id="over-achievements" class="badges"></div>
+        <h3>Хроника жизни</h3>
+        <div id="over-log" class="log over-log"></div>
+        <button type="button" id="btn-restart" class="btn primary big">Начать заново</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script src="game.js"></script>
+</body>
+</html>
